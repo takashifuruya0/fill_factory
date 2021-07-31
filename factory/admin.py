@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 
 class MachineInline(admin.TabularInline):
     model = Machine
-    fields = ("id", "name", "processes")
+    fields = ("id", "name", "processes", "materials")
     max_num = 1
     can_delete = False
-    readonly_fields = ("id", "name", "processes")
+    readonly_fields = ("id", "name", "processes", "materials")
 
 
 class FactoryCategoryAdmin(admin.ModelAdmin):
@@ -30,7 +30,9 @@ class FactoryAdmin(admin.ModelAdmin):
     autocomplete_fields = ("category",)
     list_display = ("pk", "name", "_layer1", "_layer2", "_layer3", "created_at", "last_updated_at",)
     list_filter = (
-        "machine", "machine__processes",
+        "machine",
+        "machine__processes",
+        "machine__materials",
         "category",
         # "category__parent_category",
         # "category__parent_category__parent_category",

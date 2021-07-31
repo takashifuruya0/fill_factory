@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load mathfilters %}
+
+{% block title %}
+工場一覧
+{% endblock %}
+
+{% block page-title %}
+工場一覧
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <form class="form">
+        {{search_form}}
+        <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-search"></i>&nbsp;検索</button>
+      </form>
+      <hr>
+      <table class="table">
+        <tr class="bg-info">
+          <th>No</th>
+          <th>工場名</th>
+          <th>所在地</th>
+          <th>分類</th>
+        </tr>
+        {% for object in object_list %}
+        <tr>
+          <td>
+            <a href="{% url 'factory:factory_detail' pk=object.pk %}">{{object.pk}}</a>
+          </td>
+          <td>{{object.name}}</td>
+          <td>{{object.prefecture}}</td>
+          <td>{{object.category}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      {% if page_obj.has_other_pages %}
+      <nav>
+        <ul class="pagination">
+          <!--previous-->
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link"
+               href="{%url 'factory:factory_list'%}?page={{page_obj.previous_page_number}}{{params}}"
+            >&laquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+          {% endif %}
+          <!--first-->
+          {% if page_obj.number|sub:5 > 0 %}
+          <li class="page-item">
+            <a class="page-link"
+               href="{%url 'factory:factory_list'%}?page=1{{params}}"
+            >1</a>
+          </li>
+          {% endif %}
+          <!--pages-->
+          {% for i in page_obj.paginator.page_range %}
+          {% if page_obj.number == i %}
+          <li class="page-item active">
+            <a class="page-link" href="#">{{i}}</a>
+          </li>
+          {% elif page_obj.number|sub:i < 5 and page_obj.number|sub:i > -5 %}
+          <li class="page-item">
+            <a class="page-link"
+               href="{%url 'factory:factory_list'%}?page={{i}}{{params}}"
+            >{{i}}</a>
+          </li>
+          {% elif page_obj.number|sub:i == 5 or page_obj.number|sub:i == -5 %}
+          <li class="disabled">
+            <a class="page-link text-secondary d-inline-block text-muted" href="#">・・・</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          <!--last-->
+          {% if not page_obj.number == page_obj.paginator.num_pages and page_obj.paginator.num_pages > 5%}
+          <li class="page-item">
+            <a class="page-link"
+               href="{%url 'factory:factory_list'%}?page={{page_obj.paginator.num_pages}}{{params}}"
+            >{{page_obj.paginator.num_pages}}</a>
+          </li>
+          {% endif %}
+          <!--next-->
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link"
+               href="{%url 'factory:factory_list'%}?page={{page_obj.next_page_number}}{{params}}"
+            >&raquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

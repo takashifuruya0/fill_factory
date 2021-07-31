@@ -44,16 +44,16 @@ class FactoryCategory(BaseModel):
     layer = models.IntegerField("階層", choices=CHOICES_LAYER, default=1)
     parent_category = models.ForeignKey(
         "self", blank=True, null=True,
-        verbose_name="親カテゴリ", related_name="paretnt_category", on_delete=models.CASCADE
+        verbose_name="親カテゴリ", related_name="child_categories", on_delete=models.CASCADE
     )
 
     def __str__(self):
         if self.layer == 1:
             return self.name
         elif self.layer == 2:
-            return "{}/{}".format(self.parent_category.name, self.name)
+            return "{} / {}".format(self.parent_category.name, self.name)
         elif self.layer == 3:
-            return "{}/{}/{}".format(
+            return "{} / {} / {}".format(
                 self.parent_category.parent_category.name, self.parent_category.name, self.name)
 
     def save(self, *args, **kwargs):
@@ -89,6 +89,18 @@ class FactoryCategory(BaseModel):
             return self
         else:
             return None
+
+    @property
+    def num_linked_factories(self):
+        if self.layer == 3:
+            return Factory.objects.filter(is_active=True, category=self).count()
+        elif self.layer == 2:
+            return Factory.objects.filter(is_active=True, category__in=self.child_categories.all()).count()
+        elif self.layer == 1:
+            num = 0
+            for gchild in self.child_categories.all():
+                num += gchild.num_linked_factories
+            return num
 
 
 class Factory(BaseModel):

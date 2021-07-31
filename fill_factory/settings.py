@@ -37,7 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     "factory",
+    # allauth
+    'allauth',
+    'django.contrib.sites',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    # others
+    'debug_toolbar',  # debug-toolbar
+    'django_extensions',
+    "django_bootstrap5",
+    "mathfilters",
 ]
 
 MIDDLEWARE = [

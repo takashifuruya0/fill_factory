@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h5>詳細</h5>
+      <table class="table">
+        <tr class="bg-info">
+          <th>項目</th>
+          <th>値</th>
+        </tr>
+        <tr>
+          <th>No</th>
+          <td>{{object.pk}}</td>
+        </tr>
+        <tr>
+          <th>工場名</th>
+          <td>{{object.name}}</td>
+        </tr>
+        <tr>
+          <th>詳細</th>
+          <td>{{object.detail |linebreaksbr}}</td>
+        </tr>
+        <tr>
+          <th>所在地</th>
+          <td>{{object.prefecture}}</td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td>
+            {{object.address1| default:""}}
+            {{object.address2| default:""}}
+            {{object.address3| default:""}}
+          </td>
+        </tr>
+      </table>
+
+      <hr>
+
+      <h5>保有機械</h5>
+      <table class="table">
+        <tr class="bg-info">
+          <th>No</th>
+          <th>機械名</th>
+          <th>対応加工</th>
+          <th>材質</th>
+        </tr>
+        {% for machine in object.machine_set.all %}
+        <tr>
+          <td>{{machine.pk}}</td>
+          <td>{{machine.name}}</td>
+          <td>
+            <ul>
+            {% for process in machine.processes.all %}
+              <li>{{process.name}}</li>
+            {% endfor %}
+            </ul>
+          </td>
+          <td>
+            <ul>
+            {% for material in machine.materials.all %}
+              <li>{{material.name}}</li>
+            {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <a href="{% url 'factory:factory_list' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-circle-left"></i>&nbsp;一覧へ戻る
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

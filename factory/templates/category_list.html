@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load django_bootstrap5 %}
+{% bootstrap_javascript %}
+{% load mathfilters %}
+
+{% block title %}
+カテゴリ一覧
+{% endblock %}
+
+{% block page-title %}
+カテゴリ一覧
+{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    {% for object in object_list %}
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <h5>{{object.name}} ({{object.num_linked_factories |intcomma}}件)</h5>
+        </div>
+        <div class="card-body">
+          {% for child in object.child_categories.all %}
+            <p>{{child.name}} ({{child.num_linked_factories |intcomma}}件)</p>
+            <ul>
+            {% for gchild in child.child_categories.all %}
+              <li>{{gchild.name}} ({{gchild.num_linked_factories |intcomma}}件)</li>
+            {% endfor %}
+            </ul>
+          {% endfor %}
+        </div>
+      </div>
+
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
