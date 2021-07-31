@@ -44,7 +44,8 @@ class FactoryCategory(BaseModel):
     layer = models.IntegerField("階層", choices=CHOICES_LAYER, default=1)
     parent_category = models.ForeignKey(
         "self", blank=True, null=True,
-        verbose_name="親カテゴリ", related_name="child_categories", on_delete=models.CASCADE
+        verbose_name="親カテゴリ", related_name="child_categories", on_delete=models.CASCADE,
+        limit_choices_to={"layer__in": (1, 2), "is_active": True}
     )
 
     def __str__(self):

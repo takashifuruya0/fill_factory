@@ -16,12 +16,8 @@
 {% block body %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12">
-      <form class="form">
-        {{search_form}}
-        <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-search"></i>&nbsp;検索</button>
-      </form>
-      <hr>
+    <div class="col-sm-9">
+      <h5>工場一覧</h5>
       <table class="table">
         <tr class="bg-info">
           <th>No</th>
@@ -101,6 +97,20 @@
         </ul>
       </nav>
       {% endif %}
+    </div>
+    <div class="col-sm-3">
+      <h5>検索</h5>
+      <form class="form">
+        <table class="table">
+          {{search_form.as_table}}
+        </table>
+        <button type="submit" class="btn btn-sm btn-primary">
+          <i class="fas fa-search"></i>&nbsp;検索
+        </button>
+        <a href="{% url 'factory:factory_list' %}" class="btn btn-sm btn-secondary">
+          <i class="fas fa-undo"></i>&nbsp;クリア
+        </a>
+      </form>
     </div>
   </div>
 </div>

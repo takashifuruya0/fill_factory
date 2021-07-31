@@ -24,10 +24,26 @@
         </div>
         <div class="card-body">
           {% for child in object.child_categories.all %}
-            <p>{{child.name}} ({{child.num_linked_factories |intcomma}}件)</p>
+            <p>
+              {% if gchild.num_linked_factories == 0 %}
+                {{child.name}} ({{child.num_linked_factories |intcomma}}件)
+              {% else %}
+              <a href="{% url 'factory:factory_list'%}?layer2={{child.pk}}">
+              {{child.name}} ({{child.num_linked_factories |intcomma}}件)
+              </a>
+              {% endif %}
+            </p>
             <ul>
             {% for gchild in child.child_categories.all %}
-              <li>{{gchild.name}} ({{gchild.num_linked_factories |intcomma}}件)</li>
+              <li>
+                {% if gchild.num_linked_factories == 0 %}
+                {{gchild.name}} ({{gchild.num_linked_factories |intcomma}}件)
+                {% else %}
+                <a href="{% url 'factory:factory_list'%}?layer3={{gchild.pk}}">
+                {{gchild.name}} ({{gchild.num_linked_factories |intcomma}}件)
+                </a>
+                {% endif %}
+              </li>
             {% endfor %}
             </ul>
           {% endfor %}
