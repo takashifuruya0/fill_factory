@@ -20,7 +20,11 @@
     <div class="col-4">
       <div class="card">
         <div class="card-header">
-          <h5>{{object.name}} ({{object.num_linked_factories |intcomma}}件)</h5>
+          <h5>
+            <a href="{% url 'factory:factory_list'%}?layer1={{object.pk}}">
+              {{object.name}} ({{object.num_linked_factories |intcomma}}件)
+            </a>
+          </h5>
         </div>
         <div class="card-body">
           {% for child in object.child_categories.all %}

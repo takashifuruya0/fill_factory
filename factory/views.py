@@ -36,7 +36,10 @@ class FactoryList(ListView):
             queryset = queryset.filter(category__in=categories)
             messages.info(self.request, "layer2={}".format(self.request.GET['layer2']))
         elif self.request.GET.get("layer1", None):
-            pass
+            pcs = FactoryCategory.objects.filter(is_active=True, parent_category=self.request.GET['layer1'])
+            categories = FactoryCategory.objects.filter(is_active=True, parent_category__in=pcs)
+            queryset = queryset.filter(category__in=categories)
+            messages.info(self.request, "layer1={}".format(self.request.GET['layer1']))
         # materials
         if self.request.GET.getlist("materials"):
             queryset = queryset.filter(machine__materials__in=self.request.GET.getlist("materials"))
@@ -45,7 +48,7 @@ class FactoryList(ListView):
         if self.request.GET.getlist("processes"):
             queryset = queryset.filter(machine__processes__in=self.request.GET.getlist("processes"))
             messages.info(self.request, "processes={}".format(self.request.GET.getlist('processes')))
-        return queryset
+        return queryset.distinct()
 
 
 class FactoryDetail(DetailView):
