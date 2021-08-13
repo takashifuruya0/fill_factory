@@ -130,6 +130,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# allauth
+LOGIN_URL = "/auth/login"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_ON_GET = True
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
 SITE_ID = 1
 
 # staticのURL
@@ -140,3 +149,4 @@ STATICFILES_DIRS = (
 )
 # collectstatic の格納場所
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
