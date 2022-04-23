@@ -4,11 +4,25 @@ services:
     build: .
     command: >
       bash -c '
-        python3 manage.py migrate &&
-        python3 manage.py collectstatic --no-input &&
-        python3 manage.py runserver 0.0.0.0:8000'
+        python3 manage.py migrate --settings=fill_factory.dev &&
+        python3 manage.py collectstatic --no-input --settings=fill_factory.dev &&
+        python3 manage.py runserver 0.0.0.0:8000 --settings=fill_factory.dev'
     ports:
       - 8001:8000
     volumes:
       - .:/home/fill_factory
-    
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
