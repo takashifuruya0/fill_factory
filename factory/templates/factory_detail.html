@@ -63,8 +63,8 @@
         <tr class="bg-info">
           <th>No</th>
           <th>機械名</th>
-          <th>対応加工</th>
-          <th>材質</th>
+          <th>機械種別</th>
+          <th>メーカー</th>
         </tr>
         {% for machine in object.machine_set.all %}
         <tr>
@@ -72,20 +72,8 @@
             <a href="{% url 'factory:machine_detail' pk=machine.pk %}">{{machine.pk}}</a>
           </td>
           <td>{{machine.name}}</td>
-          <td>
-            <ul>
-            {% for process in machine.processes.all %}
-              <li>{{process.name}}</li>
-            {% endfor %}
-            </ul>
-          </td>
-          <td>
-            <ul>
-            {% for material in machine.materials.all %}
-              <li>{{material.name}}</li>
-            {% endfor %}
-            </ul>
-          </td>
+          <td>{{machine.machine_type.name}}</td>
+          <td>{{machine.maker.name}}</td>
         </tr>
         {% endfor %}
       </table>

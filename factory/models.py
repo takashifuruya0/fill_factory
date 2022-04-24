@@ -107,4 +107,18 @@ class Machine(BaseModel):
     factory = models.ForeignKey(
         Factory, verbose_name="保有工場", on_delete=models.CASCADE, limit_choices_to={"is_active": True},)
     detail = models.TextField("備考・詳細", blank=True, null=True)
-
+    '''
+    Spec Fields
+    - name rule: spec_[large_category]_[middle_category]_[small_category]
+    '''
+    spec_capacity_each_axis_movement_amount_x = models.IntegerField('容量 / 各軸移動量[mm] / X', blank=True, null=True)
+    spec_capacity_each_axis_movement_amount_y = models.IntegerField('容量 / 各軸移動量[mm] / Y', blank=True, null=True)
+    spec_capacity_each_axis_movement_amount_z = models.IntegerField('容量 / 各軸移動量[mm] / Z', blank=True, null=True)
+    spec_capacity_each_axis_movement_amount_w = models.IntegerField('容量 / 各軸移動量[mm] / W', blank=True, null=True)
+    spec_capacity_others_effective_width = models.IntegerField('容量 / その他 / 有効門幅[mm]', blank=True, null=True)
+    spec_capacity_others_effective_height = models.IntegerField('容量 / その他 / 有効門高さ[mm]', blank=True, null=True)
+    spec_capacity_others_distance_from_table_top_to_spindle_end = models.CharField('容量 / その他 / テーブル上面から主軸端面までの距離[mm]', blank=True, null=True, max_length=255)
+    spec_capacity_others_distance_from_column_front_to_main_axis = models.CharField('容量 / その他 / コラム前面から主軸中心までの距離[mm]', blank=True, null=True, max_length=255)
+    spec_capacity_others_distance_from_pallet_top_to_main_axis = models.CharField('容量 / その他 / パレット上面から主軸中心までの距離[mm]', blank=True, null=True, max_length=255)
+    spec_capacity_others_distance_from_spindle_end_from_pallet_top = models.CharField('容量 / その他 / パレット上面から主軸端面[mm]', blank=True, null=True, max_length=255)
+    spec_capacity_others_distance_from_pallet_center_to_spindle_end = models.CharField('容量 / その他 / パレット中心線から主軸端面までの距離[mm]', blank=True, null=True, max_length=255)

@@ -1,8 +1,7 @@
-from cProfile import label
-from tkinter import Widget
+import imp
 from django import forms
-from factory.models import MachineType, Maker
-
+from factory.models import Machine, MachineType, Maker
+from django.db.models import fields
 
 class SearchForm(forms.Form):
     factory_name = forms.CharField(
@@ -21,4 +20,17 @@ class SearchForm(forms.Form):
     #     queryset=Maker.objects.all(), label='メーカー',
     #     widget=forms.SelectMultiple(attrs={"class": "form-control"}),
     #     )
-
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        machine_fields = Machine._meta.get_fields()
+        for f in machine_fields:
+            if 'spec' in f.name and type(f) == fields.IntegerField:
+                self.fields[f'min_{f.name}'] = forms.IntegerField(
+                    required=False, label=f'最小；{f.verbose_name}',
+                    widget=forms.NumberInput(attrs={"class": "form-control"}),
+                    )
+                self.fields[f'max_{f.name}'] = forms.IntegerField(
+                    required=False, label=f'最大；{f.verbose_name}',
+                    widget=forms.NumberInput(attrs={"class": "form-control"}),
+                    )

@@ -23,7 +23,6 @@
           <th>No</th>
           <th>工場名</th>
           <th>所在地</th>
-          <th>分類</th>
         </tr>
         {% for object in object_list %}
         <tr>
@@ -32,7 +31,6 @@
           </td>
           <td>{{object.name}}</td>
           <td>{{object.prefecture}}</td>
-          <td>{{object.category}}</td>
         </tr>
         {% endfor %}
       </table>
@@ -44,7 +42,7 @@
           {% if page_obj.has_previous %}
           <li class="page-item">
             <a class="page-link"
-               href="{%url 'factory:factory_list'%}?page={{page_obj.previous_page_number}}{{params}}"
+              href="{%url 'factory:factory_list'%}?page={{page_obj.previous_page_number}}{{params}}"
             >&laquo;</a>
           </li>
           {% else %}
@@ -54,7 +52,7 @@
           {% if page_obj.number|sub:5 > 0 %}
           <li class="page-item">
             <a class="page-link"
-               href="{%url 'factory:factory_list'%}?page=1{{params}}"
+              href="{%url 'factory:factory_list'%}?page=1{{params}}"
             >1</a>
           </li>
           {% endif %}
@@ -67,7 +65,7 @@
           {% elif page_obj.number|sub:i < 5 and page_obj.number|sub:i > -5 %}
           <li class="page-item">
             <a class="page-link"
-               href="{%url 'factory:factory_list'%}?page={{i}}{{params}}"
+              href="{%url 'factory:factory_list'%}?page={{i}}{{params}}"
             >{{i}}</a>
           </li>
           {% elif page_obj.number|sub:i == 5 or page_obj.number|sub:i == -5 %}

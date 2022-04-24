@@ -1,0 +1,53 @@
+[
+  {
+    "model": "factory.factory",
+    "pk": 1,
+    "fields": {
+      "created_at": "2022-04-24T00:16:06.527Z",
+      "last_updated_at": "2022-04-24T00:16:06.527Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "テスト工場1",
+      "detail": "機械を２つ持っています\r\n・A機械\r\n・B機械×２",
+      "prefecture": "北海道",
+      "address1": "札幌市北区",
+      "address2": "１−１−１",
+      "address3": null
+    }
+  },
+  {
+    "model": "factory.factory",
+    "pk": 2,
+    "fields": {
+      "created_at": "2022-04-24T00:16:06.527Z",
+      "last_updated_at": "2022-04-24T00:16:06.527Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "テスト工場2",
+      "detail": "機械を２つ持っています\r\n・A機械\r\n・B機械×２",
+      "prefecture": "北海道",
+      "address1": "札幌市北区",
+      "address2": "１−１−１",
+      "address3": null
+    }
+  },
+  {
+    "model": "factory.factory",
+    "pk": 3,
+    "fields": {
+      "created_at": "2022-04-24T00:16:06.527Z",
+      "last_updated_at": "2022-04-24T00:16:06.527Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "テスト工場3",
+      "detail": "機械を２つ持っています\r\n・A機械\r\n・B機械×２",
+      "prefecture": "北海道",
+      "address1": "札幌市北区",
+      "address2": "１−１−１",
+      "address3": null
+    }
+  }
+]
