@@ -37,40 +37,8 @@
         <tr>
           <th>保有工場</th>
           <td>
-            <a href="{% url 'factory:factory_detail' pk=object.owned_by.pk %}">{{object.owned_by}}</a>
+            <a href="{% url 'factory:factory_detail' pk=object.factory.pk %}">{{object.factory}}</a>
           </td>
-        </tr>
-        <tr>
-          <th>対応可能な製品サイズ</th>
-          <td>
-            <p>縦：{{object.available_size_height}}</p>
-            <p>横：{{object.available_size_width}}</p>
-            <p>斜め：{{object.available_size_diagon}}</p>
-          </td>
-        </tr>
-        <tr>
-          <th>対応加工</th>
-          <td>
-            <ul>
-            {% for process in object.processes.all %}
-              <li>{{process.name}}</li>
-            {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th>材質</th>
-          <td>
-            <ul>
-            {% for material in object.materials.all %}
-              <li>{{material.name}}</li>
-            {% endfor %}
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th>精度</th>
-          <td>{{object.accuracy}}</td>
         </tr>
         <tr>
           <th>作成日</th>
@@ -81,7 +49,7 @@
           <td>{{object.last_updated_at}}</td>
         </tr>
       </table>
-      <a href="{% url 'factory:factory_detail' pk=object.owned_by.pk %}" class="btn btn-secondary">
+      <a href="{% url 'factory:factory_detail' pk=object.factory.pk %}" class="btn btn-secondary">
         <i class="fas fa-arrow-circle-left"></i>&nbsp;保有工場へ戻る
       </a>
     </div>

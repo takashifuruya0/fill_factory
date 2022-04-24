@@ -1,0 +1,302 @@
+[
+  {
+    "model": "factory.machinetype",
+    "pk": 26,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.913Z",
+      "last_updated_at": "2022-04-24T00:01:33.913Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "NCサーボベンダー"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 27,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.916Z",
+      "last_updated_at": "2022-04-24T00:01:33.916Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "ＮＣフライス"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 28,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.920Z",
+      "last_updated_at": "2022-04-24T00:01:33.920Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "NCベンダー"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 29,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.922Z",
+      "last_updated_at": "2022-04-24T00:01:33.922Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "NC旋盤"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 30,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.925Z",
+      "last_updated_at": "2022-04-24T00:01:33.925Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "シャーリング"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 31,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.928Z",
+      "last_updated_at": "2022-04-24T00:01:33.928Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "シャーリングマシン"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 32,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.931Z",
+      "last_updated_at": "2022-04-24T00:01:33.931Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "スポット溶接機"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 33,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.932Z",
+      "last_updated_at": "2022-04-24T00:01:33.932Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "セットプレス"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 34,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.935Z",
+      "last_updated_at": "2022-04-24T00:01:33.935Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "タレットパンチプレス"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 35,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.937Z",
+      "last_updated_at": "2022-04-24T00:01:33.937Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "テーブルスポット溶接機"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 36,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.940Z",
+      "last_updated_at": "2022-04-24T00:01:33.940Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "トルクパックプレス"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 37,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.943Z",
+      "last_updated_at": "2022-04-24T00:01:33.943Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "パンチ・レーザー複合加工機"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 38,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.946Z",
+      "last_updated_at": "2022-04-24T00:01:33.946Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "バンドソー"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 39,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.948Z",
+      "last_updated_at": "2022-04-24T00:01:33.948Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "プレス"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 40,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.949Z",
+      "last_updated_at": "2022-04-24T00:01:33.949Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "ベンダー"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 41,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.952Z",
+      "last_updated_at": "2022-04-24T00:01:33.952Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "マシニングセンタ"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 42,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.954Z",
+      "last_updated_at": "2022-04-24T00:01:33.954Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "横形マシニングセンタ"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 43,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.956Z",
+      "last_updated_at": "2022-04-24T00:01:33.956Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "五軸立形マシニングセンタ"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 44,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.958Z",
+      "last_updated_at": "2022-04-24T00:01:33.958Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "材料切断機"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 45,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.961Z",
+      "last_updated_at": "2022-04-24T00:01:33.961Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "帯鋸盤"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 46,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.964Z",
+      "last_updated_at": "2022-04-24T00:01:33.964Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "卓上旋盤"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 47,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.966Z",
+      "last_updated_at": "2022-04-24T00:01:33.966Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "汎用ラム形フライス"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 48,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.968Z",
+      "last_updated_at": "2022-04-24T00:01:33.968Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "複合五軸加工機"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 49,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.969Z",
+      "last_updated_at": "2022-04-24T00:01:33.969Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "門形マシニングセンタ"
+    }
+  },
+  {
+    "model": "factory.machinetype",
+    "pk": 50,
+    "fields": {
+      "created_at": "2022-04-24T00:01:33.971Z",
+      "last_updated_at": "2022-04-24T00:01:33.971Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "立形マシニングセンタ"
+    }
+  }
+]

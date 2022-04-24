@@ -36,75 +36,14 @@ class BaseModel(models.Model):
         self.save()
 
 
-class FactoryCategory(BaseModel):
-    # CHOICES
-    CHOICES_LAYER = ((1, "1. 大分類"), (2, "2. 中分類"), (3, "3. 小分類"),)
-    # FIELDS
-    name = models.CharField("カテゴリ名", max_length=255)
-    layer = models.IntegerField("階層", choices=CHOICES_LAYER, default=1)
-    parent_category = models.ForeignKey(
-        "self", blank=True, null=True,
-        verbose_name="親カテゴリ", related_name="child_categories", on_delete=models.CASCADE,
-        limit_choices_to={"layer__in": (1, 2), "is_active": True}
-    )
+class Factory(BaseModel):
+    class Meta:
+        verbose_name = "工場"
+        verbose_name_plural = "工場"
 
     def __str__(self):
-        if self.layer == 1:
-            return self.name
-        elif self.layer == 2:
-            return "{} / {}".format(self.parent_category.name, self.name)
-        elif self.layer == 3:
-            return "{} / {} / {}".format(
-                self.parent_category.parent_category.name, self.parent_category.name, self.name)
+        return self.name
 
-    def save(self, *args, **kwargs):
-        if self.layer == 1 and self.parent_category:
-            raise Exception('Category of Layer1 should not have parent_category')
-        elif self.layer == 2 and (self.parent_category is None or self.parent_category.layer != 1):
-            raise Exception('Category of Layer2 should have parent_category of Layer1')
-        elif self.layer == 3 and (self.parent_category is None or self.parent_category.layer != 2):
-            raise Exception('Category of Layer3 should have parent_category of Layer2')
-        return super(FactoryCategory, self).save()
-
-    @property
-    def layer1(self):
-        if self.layer == 1:
-            return self
-        elif self.layer == 2:
-            return self.parent_category
-        elif self.layer == 3:
-            return self.parent_category.parent_category
-
-    @property
-    def layer2(self):
-        if self.layer == 1:
-            return None
-        elif self.layer == 2:
-            return self
-        elif self.layer == 3:
-            return self.parent_category
-
-    @property
-    def layer3(self):
-        if self.layer == 3:
-            return self
-        else:
-            return None
-
-    @property
-    def num_linked_factories(self):
-        if self.layer == 3:
-            return Factory.objects.filter(is_active=True, category=self).count()
-        elif self.layer == 2:
-            return Factory.objects.filter(is_active=True, category__in=self.child_categories.all()).count()
-        elif self.layer == 1:
-            num = 0
-            for gchild in self.child_categories.all():
-                num += gchild.num_linked_factories
-            return num
-
-
-class Factory(BaseModel):
     # CHOICES
     CHOICES_PREFECTURE = (
         (k, k) for k in (
@@ -119,68 +58,53 @@ class Factory(BaseModel):
     )
 
     # fields
-    name = models.CharField("工場名", max_length=255)
-    detail = models.TextField("工場紹介")
+    name = models.CharField("名前", max_length=255)
+    detail = models.TextField("工場詳細", blank=True, null=True)
     prefecture = models.CharField("都道府県", max_length=255, choices=CHOICES_PREFECTURE)
     address1 = models.CharField("市町村区", max_length=255)
     address2 = models.CharField("番地", max_length=255)
     address3 = models.CharField("建物名", max_length=255, blank=True, null=True)
-    category = models.ForeignKey(
-        FactoryCategory, verbose_name="カテゴリ", on_delete=models.DO_NOTHING, blank=True, null=True,
-        limit_choices_to={"layer": 3, "is_active": True},
-    )
 
     def __str__(self):
         return self.name
 
 
-class AvailableProcess(BaseModel):
-    name = models.CharField("対応加工名", max_length=255)
+class Maker(BaseModel):
+    class Meta:
+        verbose_name = "メーカー"
+        verbose_name_plural = "メーカー"
 
     def __str__(self):
         return self.name
 
+    name = models.CharField("名前", max_length=255, unique=True)
 
-class Material(BaseModel):
-    name = models.CharField("材質名", max_length=255)
 
+class MachineType(BaseModel):
+    class Meta:
+        verbose_name = "機械種別"
+        verbose_name_plural = "機械種別"
+        
     def __str__(self):
         return self.name
+
+    name = models.CharField("名前", max_length=255, unique=True)
 
 
 class Machine(BaseModel):
-    CHOICES_ACCURACY = (
-        ("10分台", "10分台"),
-        ("100分台", "100分台"),
-        ("1000分台", "1000分台"),
-    )
-    name = models.CharField("機械名", max_length=255)
-    owned_by = models.ForeignKey(
-        Factory, verbose_name="保有工場", on_delete=models.CASCADE, limit_choices_to={"is_active": True},)
-    processes = models.ManyToManyField(
-        AvailableProcess, blank=True, verbose_name="対応加工", limit_choices_to={"is_active": True},)
-    available_size_height = models.IntegerField("対応加工な製品サイズ（縦）", null=True, blank=True)
-    available_size_width = models.IntegerField("対応加工な製品サイズ（横）", null=True, blank=True)
-    available_size_diagon = models.IntegerField("対応加工な製品サイズ（斜め）", null=True, blank=True)
-    materials = models.ManyToManyField(
-        Material, blank=True, verbose_name="材質", limit_choices_to={"is_active": True},)
-    accuracy = models.CharField("加工精度（上限）", max_length=255, choices=CHOICES_ACCURACY, blank=True, null=True)
-    detail = models.TextField("備考・詳細", blank=True, null=True)
-    processes_other = models.CharField("対応可能（その他）", max_length=255, blank=True, null=True)
-
-#     機械名 自由記述
-#     対応加工 MAリスト
-#     加工可能な製品サイズ
-#     縦 自由記述(数値)
-#     横 自由記述(数値)
-#     斜め 自由記述(数値)
-#     材質 MAリスト
-#     加工精度（上限）        SAリスト
-#     最短製作日数  自由記述(数値)
-#     備考・詳細 自由記述（text）
-#     対応加工（その他）
+    class Meta:
+        verbose_name = "機械"
+        verbose_name_plural = "機械"
 
     def __str__(self):
         return self.name
 
+    name = models.CharField("名前", max_length=255)
+    maker = models.ForeignKey(
+        Maker, verbose_name='メーカー', on_delete=models.CASCADE, limit_choices_to={"is_active": True},)
+    machine_type = models.ForeignKey(
+        MachineType, verbose_name='機械種別', on_delete=models.CASCADE, limit_choices_to={"is_active": True},)
+    factory = models.ForeignKey(
+        Factory, verbose_name="保有工場", on_delete=models.CASCADE, limit_choices_to={"is_active": True},)
+    detail = models.TextField("備考・詳細", blank=True, null=True)
 

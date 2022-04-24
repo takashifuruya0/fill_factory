@@ -6,6 +6,8 @@ services:
       bash -c '
         python3 manage.py migrate --settings=fill_factory.dev &&
         python3 manage.py collectstatic --no-input --settings=fill_factory.dev &&
+        python3 manage.py loaddata env/default_user.json --settings=fill_factory.dev &&
+        python3 manage.py loaddata factory/fixtures/*.json --settings=fill_factory.dev &&
         python3 manage.py runserver 0.0.0.0:8000 --settings=fill_factory.dev'
     ports:
       - 8001:8000

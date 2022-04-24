@@ -1,65 +1,82 @@
 from django.contrib import admin
-from factory.models import Factory, FactoryCategory, Machine, AvailableProcess, Material
+from factory.models import Factory, Machine, Maker, MachineType
 from django.contrib.auth.models import User
 # Register your models here.
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 
+# ===========================
+# Resources
+# ===========================
+class MachineResource(resources.ModelResource):
+    class Meta:
+        model = Machine
+        exclude = ["created_by", "created_at", "last_updated_by", "last_updated_at"]
+
+
+class FactoryResource(resources.ModelResource):
+    class Meta:
+        model = Factory
+        exclude = ["created_by", "created_at", "last_updated_by", "last_updated_at"]
+
+
+class MachineTypeResource(resources.ModelResource):
+    class Meta:
+        model = MachineType
+        exclude = ["created_by", "created_at", "last_updated_by", "last_updated_at"]
+
+
+class MakerResource(resources.ModelResource):
+    class Meta:
+        model = Maker
+        exclude = ["created_by", "created_at", "last_updated_by", "last_updated_at"]
+
+# ===========================
+# Inlines
+# ===========================
 class MachineInline(admin.TabularInline):
     model = Machine
-    fields = ("id", "name", "processes", "materials")
+    fields = ("id", "name", "maker", "machine_type")
     max_num = 1
     can_delete = False
-    readonly_fields = ("id", "name", "processes", "materials")
+    readonly_fields = ("id", "name", "maker", "machine_type")
 
 
-class FactoryCategoryAdmin(admin.ModelAdmin):
-    search_fields = ("name", )
-    list_display = ("pk", "layer", "name", "created_at", "last_updated_at", )
-    readonly_fields = ("layer1", "layer2", "layer3")
-    ordering = ("layer", )
-    list_filter = ("layer", )
-
-
-class MachineAdmin(admin.ModelAdmin):
-    autocomplete_fields = ("owned_by", "processes")
+# ===========================
+# ModelAdmin
+# ===========================
+class MakerAdmin(ImportExportModelAdmin):
+    resource_class = MakerResource
     list_display = ("pk", "name", "created_at", "last_updated_at",)
+    search_fields = ("name",)
 
 
-class FactoryAdmin(admin.ModelAdmin):
+class MachineTypeAdmin(ImportExportModelAdmin):
+    resource_class = MachineTypeResource
+    list_display = ("pk", "name", "created_at", "last_updated_at",)
+    search_fields = ("name",)
+
+
+class FactoryAdmin(ImportExportModelAdmin):
+    resource_class = FactoryResource
     search_fields = ("name", )
-    autocomplete_fields = ("category",)
-    list_display = ("pk", "name", "_layer1", "_layer2", "_layer3", "created_at", "last_updated_at",)
-    list_filter = (
-        "machine",
-        "machine__processes",
-        "machine__materials",
-        "category",
-        # "category__parent_category",
-        # "category__parent_category__parent_category",
-    )
+    list_display = ("pk", "name", "created_at", "last_updated_at",)
+    list_filter = ('prefecture', )
     inlines = (MachineInline, )
 
-    def _layer1(self, obj):
-        return obj.category.layer1
 
-    def _layer2(self, obj):
-        return obj.category.layer2
-
-    def _layer3(self, obj):
-        return obj.category.layer3
-
-    _layer1.short_description = "大分類"
-    _layer2.short_description = "中分類"
-    _layer3.short_description = "小分類"
-
-
-class AvailableProcessAdmin(admin.ModelAdmin):
-    search_fields = ("name",)
+class MachineAdmin(ImportExportModelAdmin):
+    resource_class = MachineResource
+    autocomplete_fields = ("factory", "maker", "machine_type")
     list_display = ("pk", "name", "created_at", "last_updated_at",)
+    list_filter = ("machine_type", "maker")
 
 
+# ===========================
+# Register
+# ===========================
+admin.site.register(MachineType, MachineTypeAdmin)
+admin.site.register(Maker, MakerAdmin)
 admin.site.register(Factory, FactoryAdmin)
-admin.site.register(FactoryCategory, FactoryCategoryAdmin)
 admin.site.register(Machine, MachineAdmin)
-admin.site.register(AvailableProcess, AvailableProcessAdmin)
-admin.site.register(Material)

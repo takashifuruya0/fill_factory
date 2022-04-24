@@ -1,31 +1,24 @@
+from cProfile import label
+from tkinter import Widget
 from django import forms
-from factory.models import FactoryCategory, Material, AvailableProcess
+from factory.models import MachineType, Maker
 
 
 class SearchForm(forms.Form):
-    layer1 = forms.ModelChoiceField(
-        label="大分類", required=False,
-        queryset=FactoryCategory.objects.filter(layer=1, is_active=True),
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-    layer2 = forms.ModelChoiceField(
-        label="中分類", required=False,
-        queryset=FactoryCategory.objects.filter(layer=2, is_active=True),
-        widget = forms.Select(attrs={'class': 'form-control'})
-    )
-    layer3 = forms.ModelChoiceField(
-        label="小分類", required=False,
-        queryset=FactoryCategory.objects.filter(layer=3, is_active=True),
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-    materials = forms.ModelMultipleChoiceField(
-        label="材質", required=False,
-        queryset=Material.objects.filter(is_active=True),
-        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
-    )
-    processes = forms.ModelMultipleChoiceField(
-        label="対応加工", required=False,
-        queryset=AvailableProcess.objects.filter(is_active=True),
-        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
-    )
+    factory_name = forms.CharField(
+        label='工場名', required=False,
+        widget=forms.TextInput(attrs={"class": "form-control"})
+        )
+    machine_name = forms.CharField(
+        label='機械名', required=False,
+        widget=forms.TextInput(attrs={"class": "form-control"})
+        )
+    # machine_types = forms.ModelMultipleChoiceField(
+    #     queryset=MachineType.objects.all(), label='機械種別',
+    #     widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+    #     )
+    # makers = forms.ModelMultipleChoiceField(
+    #     queryset=Maker.objects.all(), label='メーカー',
+    #     widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+    #     )
 

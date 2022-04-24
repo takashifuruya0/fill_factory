@@ -1,0 +1,74 @@
+[
+  {
+    "model": "factory.maker",
+    "pk": 7,
+    "fields": {
+      "created_at": "2022-04-24T00:01:14.483Z",
+      "last_updated_at": "2022-04-24T00:01:14.483Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "OKK"
+    }
+  },
+  {
+    "model": "factory.maker",
+    "pk": 8,
+    "fields": {
+      "created_at": "2022-04-24T00:01:14.494Z",
+      "last_updated_at": "2022-04-24T00:01:14.494Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "アイダ"
+    }
+  },
+  {
+    "model": "factory.maker",
+    "pk": 9,
+    "fields": {
+      "created_at": "2022-04-24T00:01:14.497Z",
+      "last_updated_at": "2022-04-24T00:01:14.497Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "アマダ"
+    }
+  },
+  {
+    "model": "factory.maker",
+    "pk": 10,
+    "fields": {
+      "created_at": "2022-04-24T00:01:14.500Z",
+      "last_updated_at": "2022-04-24T00:01:14.500Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "エグロ"
+    }
+  },
+  {
+    "model": "factory.maker",
+    "pk": 11,
+    "fields": {
+      "created_at": "2022-04-24T00:01:14.504Z",
+      "last_updated_at": "2022-04-24T00:01:14.504Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "オークマ"
+    }
+  },
+  {
+    "model": "factory.maker",
+    "pk": 12,
+    "fields": {
+      "created_at": "2022-04-24T00:01:14.507Z",
+      "last_updated_at": "2022-04-24T00:01:14.507Z",
+      "created_by": null,
+      "last_updated_by": null,
+      "is_active": true,
+      "name": "FANUC"
+    }
+  }
+]
