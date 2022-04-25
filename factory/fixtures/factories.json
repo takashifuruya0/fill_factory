@@ -10,10 +10,14 @@
       "is_active": true,
       "name": "テスト工場1",
       "detail": "機械を２つ持っています\r\n・A機械\r\n・B機械×２",
+      "address": "~~~",
       "prefecture": "北海道",
       "address1": "札幌市北区",
       "address2": "１−１−１",
-      "address3": null
+      "address3": null,
+      "phone_number": "0120-117-117",
+      "mail_address": null,
+      "fax_number": "03-1111-2222"
     }
   },
   {
@@ -27,10 +31,14 @@
       "is_active": true,
       "name": "テスト工場2",
       "detail": "機械を２つ持っています\r\n・A機械\r\n・B機械×２",
+      "address": "~~~",
       "prefecture": "北海道",
       "address1": "札幌市北区",
       "address2": "１−１−１",
-      "address3": null
+      "address3": null,
+      "phone_number": "0120-117-117",
+      "mail_address": null,
+      "fax_number": "03-1111-2222"
     }
   },
   {
@@ -44,10 +52,14 @@
       "is_active": true,
       "name": "テスト工場3",
       "detail": "機械を２つ持っています\r\n・A機械\r\n・B機械×２",
+      "address": "~~~",
       "prefecture": "北海道",
       "address1": "札幌市北区",
       "address2": "１−１−１",
-      "address3": null
+      "address3": null,
+      "phone_number": "0120-117-117",
+      "mail_address": null,
+      "fax_number": "03-1111-2222"
     }
   }
 ]

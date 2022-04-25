@@ -35,12 +35,6 @@
           <td>{{object.detail |default:'' |linebreaksbr}}</td>
         </tr>
         <tr>
-          <th>保有工場</th>
-          <td>
-            <a href="{% url 'factory:factory_detail' pk=object.factory.pk %}">{{object.factory}}</a>
-          </td>
-        </tr>
-        <tr>
           <th>作成日</th>
           <td>{{object.created_at}}</td>
         </tr>
@@ -57,9 +51,25 @@
         {% endif %}
         {% endfor %}
       </table>
-      <a href="{% url 'factory:factory_detail' pk=object.factory.pk %}" class="btn btn-secondary">
-        <i class="fas fa-arrow-circle-left"></i>&nbsp;保有工場へ戻る
-      </a>
+      
+      <h5>保有工場</h5>
+      <table class="table">
+        <tr class="bg-info">
+          <th>工場名</th>
+          <th>都道府県</th>
+          <th>保有数</th>
+      <tr>
+      {% for om in object.ownmachine_set.all %}
+      <tr>
+        <td>
+          <a href="{%url 'factory:factory_detail' pk=om.factory.pk%}">
+            {{om.factory}}
+          </a>
+        </td>
+        <td>{{om.factory.prefecture}}</td>
+        <td>{{om.num}}</td>
+      </tr>
+      {% endfor %}
     </div>
   </div>
 </div>

@@ -56,8 +56,6 @@
         </tr>
       </table>
 
-      <hr>
-
       <h5>保有機械</h5>
       <table class="table">
         <tr class="bg-info">
@@ -65,15 +63,17 @@
           <th>機械名</th>
           <th>機械種別</th>
           <th>メーカー</th>
+          <th>保有数</th>
         </tr>
-        {% for machine in object.machine_set.all %}
+        {% for om in own_machines %}
         <tr>
           <td>
-            <a href="{% url 'factory:machine_detail' pk=machine.pk %}">{{machine.pk}}</a>
+            <a href="{% url 'factory:machine_detail' pk=om.machine.pk %}">{{om.machine.pk}}</a>
           </td>
-          <td>{{machine.name}}</td>
-          <td>{{machine.machine_type.name}}</td>
-          <td>{{machine.maker.name}}</td>
+          <td>{{om.machine.name}}</td>
+          <td>{{om.machine.machine_type.name}}</td>
+          <td>{{om.machine.maker.name}}</td>
+          <td>{{om.num}}</td>
         </tr>
         {% endfor %}
       </table>
