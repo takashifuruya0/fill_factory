@@ -124,6 +124,7 @@ class Factory(BaseModel):
     mail_address = models.EmailField('メールアドレス', blank=True, null=True)
     fax_number = models.CharField('FAX', max_length=255, blank=True, null=True)
     phone_number = models.CharField('電話番号', max_length=255, blank=True, null=True)
+    url = models.URLField("会社HP", blank=True, null=True)
     own_machines = models.ManyToManyField(Machine, through='OwnMachine', blank=True, 
         verbose_name='保有機械', limit_choices_to={"is_active": True},
         )
@@ -144,4 +145,4 @@ class OwnMachine(BaseModel):
     factory = models.ForeignKey(Factory, verbose_name='工場', 
         limit_choices_to={"is_active": True}, on_delete=models.CASCADE
         )
-    num = models.IntegerField('保有数')
+    num = models.IntegerField('保有数', help_text="不明な場合は1台とする", default=1)

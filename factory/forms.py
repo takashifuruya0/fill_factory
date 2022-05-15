@@ -12,6 +12,10 @@ class SearchForm(forms.Form):
         label='機械名', required=False,
         widget=forms.TextInput(attrs={"class": "form-control"})
         )
+    is_having_machines = forms.BooleanField(
+        label="保有機械データあり", required=False,
+        widget=forms.CheckboxInput()
+    )
     # machine_types = forms.ModelMultipleChoiceField(
     #     queryset=MachineType.objects.all(), label='機械種別',
     #     widget=forms.SelectMultiple(attrs={"class": "form-control"}),

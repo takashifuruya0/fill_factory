@@ -35,16 +35,29 @@
           <td>{{object.detail |linebreaksbr}}</td>
         </tr>
         <tr>
-          <th>所在地</th>
-          <td>{{object.prefecture}}</td>
-        </tr>
-        <tr>
           <th>住所</th>
           <td>
-            {{object.address1| default:""}}
-            {{object.address2| default:""}}
-            {{object.address3| default:""}}
+            {{object.postal_code| default:""}}
+            {{object.address| default:""}}
           </td>
+        </tr>
+        <tr>
+          <th>URL</th>
+          <td>
+            <a href="object.url">{{object.url}}</a>
+          </td>
+        </tr>
+        <tr>
+          <th>電話番号</th>
+          <td>{{object.phone_number}}</td>
+        </tr>
+        <tr>
+          <th>FAX</th>
+          <td>{{object.fax_number}}</td>
+        </tr>
+        <tr>
+          <th>メール</th>
+          <td>{{object.mail_address}}</td>
         </tr>
         <tr>
           <th>作成日</th>
@@ -75,6 +88,8 @@
           <td>{{om.machine.maker.name}}</td>
           <td>{{om.num}}</td>
         </tr>
+        {% empty %}
+        <tr><td colspan=5>No data</td></tr>
         {% endfor %}
       </table>
       <a href="{% url 'factory:factory_list' %}" class="btn btn-secondary">
