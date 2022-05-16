@@ -5,11 +5,11 @@
 {% load mathfilters %}
 
 {% block title %}
-工場一覧
+機械一覧
 {% endblock %}
 
 {% block page-title %}
-工場一覧
+機械一覧
 {% endblock %}
 
 
@@ -20,7 +20,7 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
-            工場一覧（{{num}}件）
+            機械一覧（{{num}}件）
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -43,16 +43,16 @@
               <table class="table">
                 <tr class="bg-info">
                   <th>No</th>
-                  <th>工場名</th>
-                  <th>住所</th>
+                  <th>機械名</th>
+                  <th>機械種別</th>
                 </tr>
                 {% for object in object_list %}
                 <tr>
                   <td>
-                    <a href="{% url 'factory:factory_detail' pk=object.pk %}">{{object.pk}}</a>
+                    <a href="{% url 'factory:machine_detail' pk=object.pk %}">{{object.pk}}</a>
                   </td>
                   <td>{{object.name}}</td>
-                  <td>{{object.postal_code}} {{object.address}}</td>
+                  <td>{{object.machine_type.name}}</td>
                 </tr>
                 {% endfor %}
               </table>
@@ -65,7 +65,7 @@
                   {% if page_obj.has_previous %}
                   <li class="page-item">
                     <a class="page-link"
-                      href="{%url 'factory:factory_list'%}?page={{page_obj.previous_page_number}}{{params}}"
+                      href="{%url 'factory:machine_list'%}?page={{page_obj.previous_page_number}}{{params}}"
                     >&laquo;</a>
                   </li>
                   {% else %}
@@ -75,7 +75,7 @@
                   {% if page_obj.number|sub:5 > 0 %}
                   <li class="page-item">
                     <a class="page-link"
-                      href="{%url 'factory:factory_list'%}?page=1{{params}}"
+                      href="{%url 'factory:machine_list'%}?page=1{{params}}"
                     >1</a>
                   </li>
                   {% endif %}
@@ -88,7 +88,7 @@
                   {% elif page_obj.number|sub:i < 5 and page_obj.number|sub:i > -5 %}
                   <li class="page-item">
                     <a class="page-link"
-                      href="{%url 'factory:factory_list'%}?page={{i}}{{params}}"
+                      href="{%url 'factory:machine_list'%}?page={{i}}{{params}}"
                     >{{i}}</a>
                   </li>
                   {% elif page_obj.number|sub:i == 5 or page_obj.number|sub:i == -5 %}
@@ -101,7 +101,7 @@
                   {% if not page_obj.number == page_obj.paginator.num_pages and page_obj.paginator.num_pages > 5%}
                   <li class="page-item">
                     <a class="page-link"
-                      href="{%url 'factory:factory_list'%}?page={{page_obj.paginator.num_pages}}{{params}}"
+                      href="{%url 'factory:machine_list'%}?page={{page_obj.paginator.num_pages}}{{params}}"
                     >{{page_obj.paginator.num_pages}}</a>
                   </li>
                   {% endif %}
@@ -109,7 +109,7 @@
                   {% if page_obj.has_next %}
                   <li class="page-item">
                     <a class="page-link"
-                      href="{%url 'factory:factory_list'%}?page={{page_obj.next_page_number}}{{params}}"
+                      href="{%url 'factory:machine_list'%}?page={{page_obj.next_page_number}}{{params}}"
                     >&raquo;</a>
                   </li>
                   {% else %}

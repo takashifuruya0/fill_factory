@@ -3,27 +3,20 @@ from django import forms
 from factory.models import Machine, MachineType, Maker
 from django.db.models import fields
 
-class SearchForm(forms.Form):
-    factory_name = forms.CharField(
-        label='工場名', required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"})
-        )
+
+class MachineSearchForm(forms.Form):
     machine_name = forms.CharField(
         label='機械名', required=False,
         widget=forms.TextInput(attrs={"class": "form-control"})
         )
-    is_having_machines = forms.BooleanField(
-        label="保有機械データあり", required=False,
-        widget=forms.CheckboxInput()
-    )
-    # machine_types = forms.ModelMultipleChoiceField(
-    #     queryset=MachineType.objects.all(), label='機械種別',
-    #     widget=forms.SelectMultiple(attrs={"class": "form-control"}),
-    #     )
-    # makers = forms.ModelMultipleChoiceField(
-    #     queryset=Maker.objects.all(), label='メーカー',
-    #     widget=forms.SelectMultiple(attrs={"class": "form-control"}),
-    #     )
+    machine_types = forms.ModelMultipleChoiceField(
+        queryset=MachineType.objects.all(), label='機械種別', required=False,
+        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+        )
+    makers = forms.ModelMultipleChoiceField(
+        queryset=Maker.objects.all(), label='メーカー', required=False,
+        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+        )
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,3 +31,14 @@ class SearchForm(forms.Form):
                     required=False, label=f'最大；{f.verbose_name}',
                     widget=forms.NumberInput(attrs={"class": "form-control"}),
                     )
+
+
+class FactorySearchForm(MachineSearchForm):
+    factory_name = forms.CharField(
+        label='工場名', required=False,
+        widget=forms.TextInput(attrs={"class": "form-control"})
+        )
+    is_having_machines = forms.BooleanField(
+        label="保有機械データあり", required=False,
+        widget=forms.CheckboxInput()
+    )

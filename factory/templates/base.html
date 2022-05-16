@@ -1,10 +1,6 @@
 {% load static %}
 {% load admin_urls %}
 {% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-{% bootstrap_messages %}
-
 
 <html>
   <head>
@@ -15,6 +11,9 @@
     <link rel="icon" href="{%static 'favicon.ico'%}">
     <link rel="stylesheet" href="{%static 'common.css'%}">
     <script src="https://kit.fontawesome.com/0e8797feee.js" crossorigin="anonymous"></script>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-light navbar-light navbar-toggleable-lg">
@@ -31,6 +30,11 @@
             <li>
               <a class="dropdown-item" href="{%url 'factory:factory_list'%}">
                 <i class="fas fa-list"></i>&nbsp;工場一覧
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{%url 'factory:machine_list'%}">
+                <i class="fas fa-list"></i>&nbsp;機械一覧
               </a>
             </li>
           </ul>
