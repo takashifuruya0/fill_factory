@@ -5,20 +5,7 @@ from factory.models import Machine, MachineType, Maker
 from django.db.models import fields
 
 
-class MachineSearchForm(forms.Form):
-    machine_name = forms.CharField(
-        label='機械名', required=False,
-        widget=forms.TextInput(attrs={"class": "form-control"})
-        )
-    machine_types = forms.ModelMultipleChoiceField(
-        queryset=MachineType.objects.all(), label='機械種別', required=False,
-        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
-        )
-    makers = forms.ModelMultipleChoiceField(
-        queryset=Maker.objects.all(), label='メーカー', required=False,
-        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
-        )
-        
+class SpecMixin(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         machine_fields = Machine._meta.get_fields()
@@ -44,7 +31,22 @@ class MachineSearchForm(forms.Form):
                         )
 
 
-class FactorySearchForm(MachineSearchForm):
+class MachineSearchForm(SpecMixin, forms.Form):
+    machine_name = forms.CharField(
+        label='機械名', required=False,
+        widget=forms.TextInput(attrs={"class": "form-control"})
+        )
+    machine_types = forms.ModelMultipleChoiceField(
+        queryset=MachineType.objects.all(), label='機械種別', required=False,
+        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+        )
+    makers = forms.ModelMultipleChoiceField(
+        queryset=Maker.objects.all(), label='メーカー', required=False,
+        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+        )
+
+
+class FactorySearchForm(SpecMixin, forms.Form):
     factory_name = forms.CharField(
         label='工場名', required=False,
         widget=forms.TextInput(attrs={"class": "form-control"})
@@ -53,3 +55,15 @@ class FactorySearchForm(MachineSearchForm):
         label="保有機械データあり", required=False,
         widget=forms.CheckboxInput()
     )
+    machine_name = forms.CharField(
+        label='機械名', required=False,
+        widget=forms.TextInput(attrs={"class": "form-control"})
+        )
+    machine_types = forms.ModelMultipleChoiceField(
+        queryset=MachineType.objects.all(), label='機械種別', required=False,
+        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+        )
+    makers = forms.ModelMultipleChoiceField(
+        queryset=Maker.objects.all(), label='メーカー', required=False,
+        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
+        )

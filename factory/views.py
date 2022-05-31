@@ -17,8 +17,8 @@ class FactoryList(ListView):
         params_dict = dict()
         search_form = FactorySearchForm(self.request.GET)
         for k, vs in dict(self.request.GET).items():
-            name = search_form.fields[k].label
             if not k == "page":
+                name = search_form.fields[k].label
                 params_dict[name] = ",".join(vs)
                 for v in vs:
                     params = params + "&{}={}".format(k, v)
@@ -57,10 +57,10 @@ class FactoryList(ListView):
                         elif self.request.GET.get(f"min_{f.name}"):
                             is_query_with_machine = True
                             machine_queryset = machine_queryset.filter(**{f'{f.name}__gte': self.request.GET.get(f"min_{f.name}")})
-                    elif type(f) == fields.BooleanField:
+                    elif type(f) == fields.BooleanField and self.request.GET.get(f.name):
                         val = True if self.request.GET.get(f.name) == 'on' else False
                         machine_queryset = machine_queryset.filter(**{f'{f.name}': val})
-                    elif type(f) == fields.CharField:
+                    elif type(f) == fields.CharField and self.request.GET.get(f.name):
                         machine_queryset = machine_queryset.filter(**{f'{f.name}__icontains': self.request.GET.get(f.name)})
             # 機械名
             if self.request.GET.get("machine_name"):
@@ -157,8 +157,16 @@ class MachineDetail(DetailView):
         context = super().get_context_data(**kwargs)
         fields = context['object']._meta.get_fields()
         specs = dict()
+        context["specs"] = dict()
         for f in fields:
-            if 'spec' in f.name:
-                specs[f.verbose_name] = f.value_from_object(context['object'])
-        context['specs'] = specs
+            if 'spec_' in f.name and f.value_from_object(context['object']):
+                specs[f.name] = {
+                    'name': f.verbose_name,
+                    'value': f.value_from_object(context['object'])
+                }
+                for i in settings.SPECS:
+                    if i in f.name:
+                        context["specs"][i] = settings.SPECS[i]
+        context['specdata'] = specs
+        # context["specs"] = settings.SPECS
         return context

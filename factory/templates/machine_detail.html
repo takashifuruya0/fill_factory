@@ -46,16 +46,37 @@
           <th>更新日</th>
           <td>{{object.last_updated_at}}</td>
         </tr>
-        {% for k, v in specs.items %}
-        {% if v %}
-        <tr>
-          <th>{{k}}</th>
-          <td>{{v}}</td>
-        </tr>
-        {% endif %}
-        {% endfor %}
       </table>
-      
+      <h5>機械スペック</h5>
+      <div class="accordion" id="accordion_spec">
+        {% for k,v in specs.items %}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{k}}" aria-expanded="false" aria-controls="{{k}}">
+              {{v}}
+            </button>
+          </h2>
+          <div id="{{k}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion_spec">
+            <div class="accordion-body">
+              <table class='table'>
+                {% for sk, sv in specdata.items %}
+                {% if 'spec_'|add:k in sk and sv.value %}
+                <tr>
+                  <th>{{sv.name}}</th>
+                  <td>{{sv.value}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        詳細データなし
+        {% endfor %}
+      </div>
+
+      <hr>
       <h5>保有工場</h5>
       <table class="table">
         <tr class="bg-info">
