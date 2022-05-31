@@ -127,7 +127,7 @@
         </div>
         <div class="tab-pane fade" id="filter" role="tabpanel" aria-labelledby="filter-tab">
           <div class="card">
-            <form class="form" method="GET">
+            <form class="form" method="GET" id='searchForm'>
               <div class="card-body table-responsive">
                 {% for f in search_form %}
                 {% if not 'spec_' in f.name %}
@@ -176,4 +176,14 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script>
+  $('form#searchForm').submit(function() {
+    $(':input', this).each(function() {
+        this.disabled = !($(this).val());
+    });
+  });
+</script>
 {% endblock %}
