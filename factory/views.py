@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from factory.models import Factory, Machine, MachineType, OwnMachine, Maker
 from factory.forms import FactorySearchForm, MachineSearchForm
 from django.contrib import messages
+from django.conf import settings
 from django.db.models import fields
 
 
@@ -14,9 +15,11 @@ class FactoryList(ListView):
         # params
         params = ""
         params_dict = dict()
+        search_form = FactorySearchForm(self.request.GET)
         for k, vs in dict(self.request.GET).items():
+            name = search_form.fields[k].label
             if not k == "page":
-                params_dict[k] = ",".join(vs)
+                params_dict[name] = ",".join(vs)
                 for v in vs:
                     params = params + "&{}={}".format(k, v)
         if params:
@@ -24,10 +27,11 @@ class FactoryList(ListView):
         # context
         context = super().get_context_data(**kwargs)
         context.update({
-            "search_form": FactorySearchForm(self.request.GET),
+            "search_form": search_form,
             "num": self.get_queryset().count(),
             "params": params,
             "params_dict": params_dict,
+            "specs": settings.SPECS,
         })
         return context
 
@@ -45,13 +49,19 @@ class FactoryList(ListView):
                 is_query_with_machine = True
             # spec
             for f in machine_fields:
-                if 'spec' in f.name and type(f) == fields.IntegerField:
-                    if self.request.GET.get(f"max_{f.name}"):
-                        is_query_with_machine = True
-                        machine_queryset = machine_queryset.filter(**{f'{f.name}__lte': self.request.GET.get(f"max_{f.name}")})
-                    elif self.request.GET.get(f"min_{f.name}"):
-                        is_query_with_machine = True
-                        machine_queryset = machine_queryset.filter(**{f'{f.name}__gte': self.request.GET.get(f"min_{f.name}")})
+                if 'spec' in f.name:
+                    if type(f) in (fields.IntegerField, fields.FloatField):
+                        if self.request.GET.get(f"max_{f.name}"):
+                            is_query_with_machine = True
+                            machine_queryset = machine_queryset.filter(**{f'{f.name}__lte': self.request.GET.get(f"max_{f.name}")})
+                        elif self.request.GET.get(f"min_{f.name}"):
+                            is_query_with_machine = True
+                            machine_queryset = machine_queryset.filter(**{f'{f.name}__gte': self.request.GET.get(f"min_{f.name}")})
+                    elif type(f) == fields.BooleanField:
+                        val = True if self.request.GET.get(f.name) == 'on' else False
+                        machine_queryset = machine_queryset.filter(**{f'{f.name}': val})
+                    elif type(f) == fields.CharField:
+                        machine_queryset = machine_queryset.filter(**{f'{f.name}__icontains': self.request.GET.get(f.name)})
             # 機械名
             if self.request.GET.get("machine_name"):
                 is_query_with_machine = True
@@ -87,23 +97,26 @@ class MachineList(ListView):
     def get_context_data(self, **kwargs):
         params = ""
         params_dict = {}
+        search_form = MachineSearchForm(self.request.GET)
         for k, vs in dict(self.request.GET).items():
             if not k == "page":
+                name = search_form.fields[k].label
                 if k == 'machine_types':
-                    params_dict[k] = ",".join([u.name for u in MachineType.objects.filter(pk__in=vs)])
+                    params_dict[name] = ",".join([u.name for u in MachineType.objects.filter(pk__in=vs)])
                 elif k == 'makers':
-                    params_dict[k] = ",".join([u.name for u in Maker.objects.filter(pk__in=vs)])
+                    params_dict[name] = ",".join([u.name for u in Maker.objects.filter(pk__in=vs)])
                 else:
-                    params_dict[k] = ",".join(vs)
+                    params_dict[name] = ",".join(vs)
                 for v in vs:
                     params = params + "&{}={}".format(k, v)
         # context
         context = super(MachineList, self).get_context_data(**kwargs)
         context.update({
-            "search_form": MachineSearchForm(self.request.GET),
+            "search_form": search_form,
             "num": self.get_queryset().count(),
             "params": params,
             "params_dict": params_dict,
+            "specs": settings.SPECS,
         })
         return context
     
@@ -113,11 +126,17 @@ class MachineList(ListView):
             machine_fields = Machine._meta.get_fields()
             # spec
             for f in machine_fields:
-                if 'spec' in f.name and type(f) == fields.IntegerField:
-                    if self.request.GET.get(f"max_{f.name}"):
-                        queryset = queryset.filter(**{f'{f.name}__lte': self.request.GET.get(f"max_{f.name}")})
-                    elif self.request.GET.get(f"min_{f.name}"):
-                        queryset = queryset.filter(**{f'{f.name}__gte': self.request.GET.get(f"min_{f.name}")})
+                if 'spec' in f.name:
+                    if type(f) in (fields.IntegerField, fields.FloatField):
+                        if self.request.GET.get(f"max_{f.name}"):
+                            queryset = queryset.filter(**{f'{f.name}__lte': self.request.GET.get(f"max_{f.name}")})
+                        elif self.request.GET.get(f"min_{f.name}"):
+                            queryset = queryset.filter(**{f'{f.name}__gte': self.request.GET.get(f"min_{f.name}")})
+                    elif type(f) == fields.BooleanField and self.request.GET.get(f.name):
+                        val = True if self.request.GET.get(f.name) == 'on' else False
+                        queryset = queryset.filter(**{f'{f.name}': val})
+                    elif type(f) == fields.CharField and self.request.GET.get(f.name):
+                        queryset = queryset.filter(**{f'{f.name}__icontains': self.request.GET.get(f.name)})
             # 機械名
             if self.request.GET.get("machine_name"):
                 queryset = queryset.filter(name__icontains=self.request.GET.get("machine_name"))

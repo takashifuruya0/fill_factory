@@ -156,3 +156,13 @@ STATICFILES_DIRS = (
 # collectstatic の格納場所
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# specs
+SPECS = {
+    'capacity': '容量',
+    'table': 'テーブル',
+    'palette': 'パレット',
+    'spindle': '主軸', 
+    'sending_speed': '送り速度',
+    'atc': '自動工具交換装置(ATC)',
+    'knife_stand': '刃物台',
+}

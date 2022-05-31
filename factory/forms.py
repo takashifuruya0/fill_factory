@@ -1,4 +1,5 @@
 import imp
+from tkinter import Widget
 from django import forms
 from factory.models import Machine, MachineType, Maker
 from django.db.models import fields
@@ -22,15 +23,25 @@ class MachineSearchForm(forms.Form):
         super().__init__(*args, **kwargs)
         machine_fields = Machine._meta.get_fields()
         for f in machine_fields:
-            if 'spec' in f.name and type(f) == fields.IntegerField:
-                self.fields[f'min_{f.name}'] = forms.IntegerField(
-                    required=False, label=f'最小；{f.verbose_name}',
-                    widget=forms.NumberInput(attrs={"class": "form-control"}),
-                    )
-                self.fields[f'max_{f.name}'] = forms.IntegerField(
-                    required=False, label=f'最大；{f.verbose_name}',
-                    widget=forms.NumberInput(attrs={"class": "form-control"}),
-                    )
+            if 'spec' in f.name:
+                if type(f) in (fields.IntegerField, fields.FloatField):
+                    self.fields[f'min_{f.name}'] = forms.IntegerField(
+                        required=False, label=f'{f.verbose_name};最小値',
+                        widget=forms.NumberInput(attrs={"class": "form-control"}),
+                        )
+                    self.fields[f'max_{f.name}'] = forms.IntegerField(
+                        required=False, label=f'{f.verbose_name};最大値',
+                        widget=forms.NumberInput(attrs={"class": "form-control"}),
+                        )
+                elif type(f) == fields.BooleanField:
+                    self.fields[f"{f.name}"] = forms.BooleanField(
+                        required=False, label=f.verbose_name,
+                        )
+                elif type(f) == fields.CharField:
+                    self.fields[f"{f.name}"] = forms.CharField(
+                        required=False, label=f.verbose_name,
+                        widget=forms.TextInput(attrs={"class": "form-control"})
+                        )
 
 
 class FactorySearchForm(MachineSearchForm):
