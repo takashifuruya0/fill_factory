@@ -165,7 +165,7 @@ class MachineDetail(DetailView):
                     'value': f.value_from_object(context['object'])
                 }
                 for i in settings.SPECS:
-                    if i in f.name:
+                    if f"spec_{i}" in f.name and not i in context["specs"].keys():
                         context["specs"][i] = settings.SPECS[i]
         context['specdata'] = specs
         # context["specs"] = settings.SPECS
